@@ -96,7 +96,9 @@ module MakeStack (Element: SERIALIZE) : (STACK with type element = Element.t) =
 struct
   exception Empty
   type element = Element.t
+
   type stack = element list
+
   let empty : stack = []
   let push (el : element) (s : stack) : stack =
     el :: s
@@ -115,7 +117,8 @@ struct
     List.fold_left
   let serialize (s : stack) : string =
     let f x y = Element.serialize y  ^ (if x <> "" then ":" ^ x else "") in
-    fold_left f "" send ;;
+    fold_left f "" s
+end ;;
 
 (*......................................................................
 Exercise 1B: Now, make a module "IntStack" by applying the functor
