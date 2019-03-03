@@ -135,7 +135,7 @@ Exercise 1B: Now, make a module "IntStack" by applying the functor
 that you just defined to an appropriate module for serializing ints.
 ......................................................................*)
 
-module IntSerialize =
+module IntSerialize : (SERIALIZE with type t = int) =
   struct
     type t = int
     let serialize = string_of_int
