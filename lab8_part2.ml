@@ -6,7 +6,7 @@
 
 (* Objective:
 
-This lab practices concepts of functors. 
+This lab practices concepts of functors.
  *)
 
 (*======================================================================
@@ -103,28 +103,31 @@ module MakeStack (Element: SERIALIZE) : (STACK with type element = Element.t) =
     let empty : stack = []
 
     let push (el : element) (s : stack) : stack =
-      failwith "not implemented"
+      el :: s
 
     let pop_helper (s : stack) : (element * stack) =
-      failwith "not implemented"
+      match s with
+      | [] -> raise Empty
+      | hd :: tl -> (hd, tl)
 
     let top (s : stack) : element =
-      failwith "not implemented"
+      let pop_helper s = (hd, tl) in hd
 
     let pop (s : stack) : stack =
-      failwith "not implemented"
+      let pop_helper s = (hd, tl) in tl
 
     let map (f : element -> element) (s : stack) : stack =
-      failwith "not implemented"
+      List.map f s
 
-    let filter (f : element -> bool) (s : stack) : stack =
-      failwith "not implemented"
+    let filter : (element -> bool) -> stack -> stack =
+      List.filter
 
-    let fold_left (f : 'a -> element -> 'a) (init : 'a) (s : stack) : 'a =
-      failwith "not implemented"
+    let fold_left : ('a -> element -> 'a) -> 'a -> stack =
+      List.fold_left
 
     let serialize (s : stack) : string =
-      failwith "not implemented"
+      let f x y = SERIALIZE.serialize y ^ (if x <> then " : " ^ x else "") in
+      fold_left f "" s
   end ;;
 
 (*......................................................................
@@ -132,7 +135,11 @@ Exercise 1B: Now, make a module "IntStack" by applying the functor
 that you just defined to an appropriate module for serializing ints.
 ......................................................................*)
 
-module IntStack = struct end ;;
+module IntStack =
+  struct
+    type t = int
+    let serialize = string_of_int
+  end ;;
 
 (*......................................................................
 Exercise 1C: Make a module "IntStringStack" that creates a stack whose
@@ -150,6 +157,11 @@ For this oversimplified serialization function, you may assume that
 the string will be made up of alphanumeric characters only.
 ......................................................................*)
 
-module IntStringStack = struct end ;;
+module IntStringSerialize =
+  struct
+    type t = (int * string)
+    let serialize (n, s) = "(" ^ string_of_int n ^ ",'" ^ s ^ "')"
+  end ;;
 
-
+module IntStringStack =
+  MakeStack (IntStringSerialize) ;;
