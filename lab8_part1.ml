@@ -328,5 +328,5 @@ instead?
 module IntBestInterval =
     MakeBestInterval(struct
                      type t = int
-                     compare = Pervasives.compare
-                     end ) ;;
+                     let compare = Pervasives.compare
+                     end) ;;
