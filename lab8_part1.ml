@@ -175,7 +175,7 @@ module MakeSafeInterval (Endpoint : ORDERED_TYPE) : INTERVAL =
     (* create low high -- Returns a new interval covering low to
        high. If low > high, then the interval is empty. *)
     let create (low : Endpoint.t) (high : Endpoint.t) : interval =
-      if Enpoint.compare low high 0 then Empty
+      if Endpoint.compare low high 0 then Empty
       else Interval (low, high)
 
 
@@ -276,7 +276,7 @@ module MakeBestInterval (Endpoint : ORDERED_TYPE)
     (* create low high -- Returns a new interval covering low to
        high. If low > high, then the interval is empty. *)
     let create (low : Endpoint.t) (high : Endpoint.t) : interval =
-      if Enpoint.compare low high 0 then Empty
+      if Endpoint.compare low high 0 then Empty
       else Interval (low, high)
 
 
