@@ -279,7 +279,6 @@ module MakeBestInterval (Endpoint : ORDERED_TYPE)
       if Endpoint.compare low high > 0 then Empty
       else Interval (low, high)
 
-
     (* is_empty intvl -- Returns true if and only if the interval is empty *)
     let is_empty (intvl : interval) : bool =
       intvl = Empty
